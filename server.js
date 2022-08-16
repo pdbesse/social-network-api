@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(routes);
 
-const connectionStringURI = `mongodb://localhost:27017/fakeTwitterDB`;
+// const connectionStringURI = `mongodb://localhost:27017/fakeTwitterDB`;
 
 db.once('open', () => {
     app.listen(PORT, () => {
