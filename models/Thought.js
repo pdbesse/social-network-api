@@ -1,5 +1,26 @@
 const mongoose = require('mongoose');
 
+const reactionSchema = new mongoose.Schema({
+    reactionId: {
+        type: Schema.types.ObjectId,
+        default: new ObjectId,
+    },
+    reactionBody: {
+        type: String,
+        required: true,
+        max: 280
+    },
+    username: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        // getter to format
+    }
+})
+
 const thoughtSchema = new mongoose.Schema({
     thoughtText: {
         type: String,
@@ -10,13 +31,13 @@ const thoughtSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: 
+        // getter to format
     },
     username: {
         type: String,
         required: true,
     },
-    friends: [{}]
+    reactions: [reactionSchema]
 })
 
 const Thought = mongoose.model('Thought', thoughtSchema);
