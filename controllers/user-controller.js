@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 module.exports = {
     getUsers(req, res) {
@@ -30,7 +30,7 @@ module.exports = {
         User.findByIdAndUpdate(
             { _id: req.params.userId },
             { $set: req.body },
-            { new: true, runValidators: true, new: true })
+            { runValidators: true, new: true })
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user found with that id' })
@@ -42,10 +42,24 @@ module.exports = {
             });
     },
     deleteUser(req, res) {
-        User.findOneAndDelete({ _id: req.params.userID })
+        User.findOneAndDelete({ _id: req.params.userId })
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user found with that id' })
-        )
-    }
-}
+                    : res.json({ message: 'User deleted.' })
+                // : Thought.findAll({ username: user.username})
+                // .then(videos)
+            )
+            .catch((err) => {
+                console.error(err);
+                res.status(500).json(err);
+            })
+    },
+    // addFriend(req,res) {
+    //     User.findOne({_id: req.params.userId})
+    //         .then((user) =>
+    //         !user
+    //             ? res.status(400).json({message: 'No user found with that id'}
+    //             : res.json))
+    // }
+};
