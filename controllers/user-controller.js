@@ -55,11 +55,34 @@ module.exports = {
                 res.status(500).json(err);
             })
     },
-    // addFriend(req,res) {
-    //     User.findOne({_id: req.params.userId})
-    //         .then((user) =>
-    //         !user
-    //             ? res.status(400).json({message: 'No user found with that id'}
-    //             : res.json))
-    // }
+    addFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $addToSet: { friends: req.params.friendId } },
+            { new: true })
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user found with that id' })
+                    : res.json('Friend added')
+            )
+            .catch((err) => {
+                console.error(err);
+                res.status(500).json(err);
+            });
+    },
+    deleteFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId } },
+            { new: true })
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user found with that id' })
+                    : res.json('Friend deleted')
+            )
+            .catch((err) => {
+                console.error(err);
+                res.status(500).json(err);
+            });
+    },
 };
