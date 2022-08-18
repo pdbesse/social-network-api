@@ -26,7 +26,7 @@ const reactionSchema = new Schema(
         toJSON: {
             getters: true,
         },
-        id: false,
+        _id: false,
     }
 );
 
@@ -34,7 +34,7 @@ const thoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
-            required: 'Please enter a thought!',
+            required: true,
             min: 1,
             max: 280
         },
