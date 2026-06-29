@@ -8,14 +8,21 @@
     "start": "nodemon server.js"
   },
   "name": "social-network-api",
-  "description": "",
+  "description": "RESTful backend API for a social networking application using Node.js, Express.js, MongoDB, and Mongoose.",
   "version": "1.0.0",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pdbesse/social-network-api.git"
   },
-  "keywords": [],
+  "keywords": [
+  "nodejs",
+  "express",
+  "mongodb",
+  "mongoose",
+  "rest-api",
+  "backend"
+],
   "author": "",
   "license": "ISC",
   "bugs": {
