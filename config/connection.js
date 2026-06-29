@@ -1,8 +1,8 @@
-const { connect, connection } = require('mongoose');
+const mongoose = require('mongoose');
 
-connect('mongodb://localhost:27017/fakeTwitterDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const connectionString =
+  process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/fakeTwitterDB';
 
-module.exports = connection;
+mongoose.connect(connectionString);
+
+module.exports = mongoose.connection;
