@@ -1,138 +1,147 @@
-# social-network-api
+# Social Network API
 
-## Description
+A RESTful backend API for a social networking application built with **Node.js**, **Express.js**, **MongoDB**, and **Mongoose**.
 
-This app allows the user to view, create, update, and delete users, thoughts, friends, and reactions in a social network backend.
+This project demonstrates backend application development using a NoSQL database, RESTful routing, and a controller-based architecture. It allows users to create accounts, share thoughts, react to posts, and manage friend relationships through a collection of API endpoints.
 
 ---
 
-## Table of Contents
+## Features
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Code Snippets](#code-snippets)
-* [Technology](#technology)
-* [Credits](#credits)
-* [Testing](#testing)
-* [License](#license)
+- Create, read, update, and delete users
+- Create, read, update, and delete thoughts
+- Add and remove friends
+- Add and remove reactions
+- RESTful API architecture
+- MongoDB integration with Mongoose
+- Modular Express routing
+- Controller-based application design
+
+---
+
+## Technologies Used
+
+- JavaScript
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- Insomnia
+- Git
+- GitHub
+
+---
+
+## Project Structure
+
+```text
+social-network-api/
+├── config/
+│   └── connection.js
+├── controllers/
+│   ├── thought-controller.js
+│   └── user-controller.js
+├── models/
+│   ├── Thought.js
+│   ├── User.js
+│   └── index.js
+├── routes/
+│   ├── api/
+│   └── index.js
+├── server.js
+├── package.json
+└── README.md
+```
 
 ---
 
 ## Installation
 
-The files for this program can be downloaded [here](https://github.com/pdbesse/social-network-api/archive/refs/heads/main.zip). 
+Clone the repository:
 
-This app requires node.js to be installed. For download and installation instructions, please see [nodejs.org](https://nodejs.org/en/download/).
-
-This app also requires Mongoose, Express, and Nodemon to be installed. To do this, open the terminal and navigate to the extracted folder. Enter: 
+```bash
+git clone https://github.com/pdbesse/social-network-api.git
 ```
+
+Navigate to the project directory:
+
+```bash
+cd social-network-api
+```
+
+Install dependencies:
+
+```bash
 npm install
 ```
-This will download any modules required for the app to work. 
 
 ---
 
 ## Usage
 
-After downloading the files and installing the required modules, the user should enter
-```
+Start the development server:
+
+```bash
 npm start
 ```
-to start the server. 
 
-The routes can then be tested in Insomnia.
-
-A video walkthrough of the app can be viewed [here](https://youtu.be/QqDm2LhZ4tI).
+Once the server is running, test the API using Insomnia, Postman, or another REST client.
 
 ---
 
-## Code Snippets
+## API Overview
 
-This app splits the API routes up into controller functions and the routes themselves. I will highlight one example.
+### User Endpoints
 
-```javascript
-createThought(req, res) {
-        Thought.create(req.body)
-            .then((thought) => {
-                return User.findOneAndUpdate(
-                    { _id: req.body.userId },
-                    { $addToSet: { thoughts: thought._id } },
-                    { new: true }
-                );
-            })
-            .then((user) =>
-                !user
-                    ? res.status(404).json({ message: 'No user found with that id' })
-                    : res.json('Thought added')
-            )
-            .catch((err) => {
-                console.error(err);
-                res.status(500).json(err);
-            });
-    }
-```
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| GET | `/api/users` | Retrieve all users |
+| GET | `/api/users/:id` | Retrieve a single user |
+| POST | `/api/users` | Create a new user |
+| PUT | `/api/users/:id` | Update an existing user |
+| DELETE | `/api/users/:id` | Delete a user |
+| POST | `/api/users/:userId/friends/:friendId` | Add a friend |
+| DELETE | `/api/users/:userId/friends/:friendId` | Remove a friend |
 
-createThought creates a thought according to the thought schema using the data provided in the request body. It then finds a user by the user _id according to the _id procided in the request body. It adds the created thought's _id to the user's 'thoughts' array before either returning an error or 'Thought added'.
+### Thought Endpoints
 
-```javascript
-router.route('/').post(createThought);
-```
-
-This route calls the createThought function from the thought controller when the '/' route is queried with the post method.
-
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| GET | `/api/thoughts` | Retrieve all thoughts |
+| GET | `/api/thoughts/:id` | Retrieve a single thought |
+| POST | `/api/thoughts` | Create a new thought |
+| PUT | `/api/thoughts/:id` | Update a thought |
+| DELETE | `/api/thoughts/:id` | Delete a thought |
+| POST | `/api/thoughts/:thoughtId/reactions` | Add a reaction |
+| DELETE | `/api/thoughts/:thoughtId/reactions/:reactionId` | Remove a reaction |
 
 ---
 
-## Technology
+## What I Learned
 
-Technology Used:
-* [GitHub](https://github.com/)
-* [GitBash](https://gitforwindows.org/)
-* [Visual Studio Code](https://code.visualstudio.com/)
-* [Javascipt](https://www.javascript.com/)
-* [node.js](https://nodejs.org/en/)
-* [Mongoose](https://mongoosejs.com/docs/)
-* [Express](https://expressjs.com/)
-* [Insomnia](https://docs.insomnia.rest/)
+This project strengthened my understanding of:
+
+- Designing RESTful APIs
+- Structuring Express applications using controllers and routes
+- Modeling document relationships with MongoDB and Mongoose
+- Organizing maintainable backend code
+- Testing APIs with Insomnia
 
 ---
 
-## Credits
+## Future Improvements
 
-All coding credited to Phillip Besse.
+Potential future enhancements include:
 
----
-
-## Testing
-
-All routes are tested in Insomnia. See video linked above.
+- User authentication and authorization
+- Environment variable configuration
+- Input validation
+- Automated testing
+- Improved error handling
+- API documentation with OpenAPI/Swagger
 
 ---
 
 ## License
 
-Phillip Besse's Social Network API is licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
-
-MIT License
-
-Copyright (c) 2022 Phillip Besse
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
----
+This project is licensed under the MIT License.
